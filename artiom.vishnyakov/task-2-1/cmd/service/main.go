@@ -2,6 +2,23 @@ package main
 
 import "fmt"
 
+func calcTemp(op string, temp int, maxTemp *int, minTemp *int) int {
+	if op == "<=" {
+		if temp < *maxTemp {
+			*maxTemp = temp
+		}
+	}
+	if op == ">=" {
+		if temp > *minTemp {
+			*minTemp = temp
+		}
+	}
+	if *minTemp > *maxTemp {
+		return -1
+	}
+	return *minTemp
+}
+
 func main() {
 	var amount_office int
 	_, err := fmt.Scan(&amount_office)
@@ -15,6 +32,8 @@ func main() {
 		if err != nil {
 			return
 		}
+		minTemp := 15
+		maxTemp := 30
 		for j := 0; j < amount_emplyee; j++ {
 			var op string
 			_, err = fmt.Scan(&op)
@@ -29,6 +48,7 @@ func main() {
 			if err != nil {
 				return
 			}
+			fmt.Println(calcTemp(op, num, &maxTemp, &minTemp))
 		}
 	}
 
