@@ -25,6 +25,7 @@ func main() {
 	_, err := fmt.Scan(&amountOffice)
 	if err != nil {
 		fmt.Println("Error: failed to read number of offices")
+
 		return
 	}
 
@@ -34,6 +35,7 @@ func main() {
 		_, err = fmt.Scan(&amountEmployee)
 		if err != nil {
 			fmt.Println("Error: failed to read number of employees")
+
 			return
 		}
 
@@ -46,11 +48,13 @@ func main() {
 			_, err = fmt.Scan(&operation)
 			if err != nil {
 				fmt.Println("Error: failed to read operation")
+
 				return
 			}
 
 			if operation != "<=" && operation != ">=" {
 				fmt.Println("Error: invalid operation, expected '<=' or '>='")
+
 				return
 			}
 
@@ -59,6 +63,7 @@ func main() {
 			_, err = fmt.Scan(&num)
 			if err != nil {
 				fmt.Println("Error: failed to read temperature")
+
 				return
 			}
 
