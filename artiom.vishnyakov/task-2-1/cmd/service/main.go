@@ -2,24 +2,21 @@ package main
 
 import "fmt"
 
-func calcTemp(operation string, temp int, maxTemp *int, minTemp *int) int {
-	if operation == "<=" {
-		if temp < *maxTemp {
-			*maxTemp = temp
-		}
+const (
+	minTempInit = 15
+	maxTempInit = 30
+)
+
+func calcTemp(operation string, temp, minTemp, maxTemp int) (int, int) {
+	if operation == "<=" && temp < maxTemp {
+		maxTemp = temp
 	}
 
-	if operation == ">=" {
-		if temp > *minTemp {
-			*minTemp = temp
-		}
+	if operation == ">=" && temp > minTemp {
+		minTemp = temp
 	}
 
-	if *minTemp > *maxTemp {
-		return -1
-	}
-
-	return *minTemp
+	return minTemp, maxTemp
 }
 
 func main() {
@@ -27,6 +24,7 @@ func main() {
 
 	_, err := fmt.Scan(&amountOffice)
 	if err != nil {
+		fmt.Println("Error: failed to read number of offices")
 		return
 	}
 
@@ -35,21 +33,24 @@ func main() {
 
 		_, err = fmt.Scan(&amountEmployee)
 		if err != nil {
+			fmt.Println("Error: failed to read number of employees")
 			return
 		}
 
-		minTemp := 15
-		maxTemp := 30
+		minTemp := minTempInit
+		maxTemp := maxTempInit
 
 		for range amountEmployee {
 			var operation string
 
 			_, err = fmt.Scan(&operation)
 			if err != nil {
+				fmt.Println("Error: failed to read operation")
 				return
 			}
 
 			if operation != "<=" && operation != ">=" {
+				fmt.Println("Error: invalid operation, expected '<=' or '>='")
 				return
 			}
 
@@ -57,10 +58,17 @@ func main() {
 
 			_, err = fmt.Scan(&num)
 			if err != nil {
+				fmt.Println("Error: failed to read temperature")
 				return
 			}
 
-			fmt.Println(calcTemp(operation, num, &maxTemp, &minTemp))
+			minTemp, maxTemp = calcTemp(operation, num, minTemp, maxTemp)
+
+			if minTemp > maxTemp {
+				fmt.Println(-1)
+			} else {
+				fmt.Println(minTemp)
+			}
 		}
 	}
 }
